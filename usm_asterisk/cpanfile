@@ -1,0 +1,7 @@
+requires 'EV';
+requires 'FindBin';
+requires 'Asterisk::AMI';
+requires 'Time::Local';
+requires 'LWP::UserAgent';
+requires 'LWP::Protocol::https';
+requires 'HTTP::Request';
