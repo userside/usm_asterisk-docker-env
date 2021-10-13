@@ -1,24 +1,21 @@
-version: '3.2'
-
 services:
 
   usm_asterisk:
-    restart: always
     build:
-      context: ./usm_asterisk
+      context: ${USERSIDE_BASE_DIR}/usm_asterisk
+    restart: always
     environment:
+      USERSIDE_API_KEY: 'userside-api-key'
       ASTERISK_HOST: 'asterisk.server.address'
       ASTERISK_PORT: 5038
       ASTERISK_USERNAME: 'admin'
       ASTERISK_SECRET: 'passwd1234'
       ASTERISK_PROTOCOL_VERSION: 3
-      ASTERISK_FROM_CONTEXTS: 'from-trunk'  # The separator is a space.
-      USERSIDE_API_URL: 'https://userside.company.net/api.php'
-      USERSIDE_API_KEY: 'userside-api-key'
-      LOG_API_ANS: 0
+      ASTERISK_FROM_CONTEXTS: 'from-trunk'  # incomeing contexts separated by a space
     volumes:
-      - ./usm_asterisk/module:/app
-      - ./usm_asterisk/log:/var/log/
-    # Uncomment next two lines if you use a userside docker bundle.
-    # networks:
-    #   - internal
+      - ${USERSIDE_BASE_DIR}/usm_asterisk/module:/app
+      - ${USERSIDE_BASE_DIR}/usm_asterisk/log:/var/log
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    networks:
+      - internal
